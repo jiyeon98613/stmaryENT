@@ -1,0 +1,10 @@
+{
+  "december": {
+    "holidays": {
+      "25": "chri",
+      "31": "nye"
+    },
+    "firstday": "Friday",
+    "id": 12
+  }
+}
