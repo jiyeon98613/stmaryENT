@@ -1,5 +1,16 @@
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
+//import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.InputMismatchException;
 import java.util.Locale;
@@ -8,8 +19,9 @@ import java.util.Scanner;
 import java.util.Set;
 import java.time.Month;
 import java.time.format.*;
-
+import java.lang.reflect.Type;
 import com.google.gson.*;
+import com.google.gson.reflect.TypeToken;
 
 public class setHoliday
 {
@@ -23,17 +35,29 @@ public class setHoliday
     String jsonTargetMonth;
     HashMap<Integer, String> holidays = new HashMap<Integer, String>();
 
-    Scanner scanner = new Scanner(System.in);
+    Scanner scanner = new Scanner(System.in, StandardCharsets.UTF_8.name());
 
     public static void main(String[] args)
     {
+
         setHoliday setHoliday = new setHoliday();
+        System.out.println("Current file encoding: " + System.getProperty("file.encoding"));
+        System.out.println("한글 테스트중.");
+        System.out.println("If the line above is broken, try again with typing \"chcp 65001 \" before running this program.");
         setHoliday.printList();
         return;
     }
 
+    /**
+     * This method will load the json files(yearly-jsons/yyyy-holidays.json) data into the program .
+     */
+    private void readingExistingHolidays(){
+
+    }
+
     private void printList()
     {
+        
         int action;
         setYear_Date();
         System.out.println("first day of the month is " + day_of_First_day);
@@ -105,22 +129,37 @@ public class setHoliday
         }
     }
 
-    /**
-     * 
-     */
     private void deleteHoliday()
     {
-        System.out.println("type date you are trying to delete:");
-        int del = scanner.nextInt();
-        scanner.nextLine();
-        //if there is no such holidays in the hashmap
-        if (holidays.get(del) != null) {
-           holidays.remove(del);
-        }else{ System.out.println("unregistered date.");}
+        while (true) {
+            System.out.println("type date you are trying to delete:");
+            System.out.println("(to return to main, type \"m\")");
+            String del = scanner.nextLine();
+            if (del == "m") {
+                return;
+            }
+            int intDel = Integer.getInteger(del); // int or null
+            // if there is no such holidays in the hashmap
+            if (holidays.get(intDel) != null) {
+                holidays.remove(intDel);
+                System.out.println("holiday on the " + intDel + "th of the " + getStrMonth(month) + "is deleted:");
+                printHolidays();
+                System.out.println("");
+
+            } else {
+                System.out.println("unregistered date or wrong input type. Try again.");
+                continue;
+            }
+        }
     }
 
     private void printHolidays()
     {
+        if (holidays == null || holidays.isEmpty()) {
+            System.out.println("Current month doesn't have any holidays being set up yet.");
+            System.out.println("");
+            return;
+        }
         Set<Integer> date_entry = holidays.keySet();
         for (int date : date_entry) {
             System.out.println(month + "/" + date + ": " + holidays.get(date));
@@ -135,15 +174,15 @@ public class setHoliday
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
         Map<String, Object> monthMap = new HashMap<>();
-        Map<String, Object>[] holidaysList = new HashMap[holidays.size()];
-        Set<Integer> dataSet = holidays.keySet();
-        int i = 0;
-        for (int date : dataSet) {
-            holidaysList[i].put("date", date);
-            holidaysList[i].put("title", holidays.get(date));
-            ++i;
+        // Map<String, Object>[] holidaysList = new HashMap[holidays.size()];
+        // Set<Integer> dataSet = holidays.keySet();
+        // int i = 0;
+        // for (int date : dataSet) {
+        //     holidaysList[i].put("date", date);
+        //     holidaysList[i].put("title", holidays.get(date));
+        //     ++i;
 
-        }
+        // }
         monthMap.put("id", month);
         monthMap.put("firstday", firstday);
         monthMap.put("holidays", holidays);
@@ -160,12 +199,19 @@ public class setHoliday
             data = monthMap;
         }
         String json = gson.toJson(data);
-        
-        //save yyyy_holidays file on current directory.
-        //if the file already exists, then the data should be appended on it.
-        try (FileWriter writer = new FileWriter( filename+".json", true)) { //true = available append mode
+
+        //creates new parent file if not
+        File file = new File(filename + ".json");
+        File parentDir = file.getParentFile();
+        if (parentDir != null && !parentDir.exists()) {
+            parentDir.mkdirs(); 
+        }
+
+        try (Writer writer = new BufferedWriter(new OutputStreamWriter(
+            new FileOutputStream(filename + ".json", true), StandardCharsets.UTF_8))) {
             writer.write(json);
-            System.out.println( filename + "JSON file has saved successfully.");
+        }  catch (FileNotFoundException fnfe){
+            fnfe.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -173,14 +219,46 @@ public class setHoliday
 
     }
 
+    /**
+     * check if there is any saved data of current month,
+     * 
+     */
     private void setupACalendar()
     {
+        String folderPath = "stmaryWebProject/monthly-jsons/";
+        String year = Integer.toString(year_first_two) + Integer.toString(year_last_two);
+        jsonFileName = "stmaryWebProject/yearly-jsons/" + year + "_holidays";
+        jsonTargetMonth = folderPath + year + "-" + getStrMonth(month);
+        //folderPath에 jsonTargetMonth파일이 존재하는지 확인 후, 존자하면 그 파일안의 holiday 데이터를
+        // mem var인 HashMap<Integer, String> holidays 에 로드하기.
+        Gson gson = new Gson();
+
+        try {
+            String jsonContent = new String(Files.readAllBytes(Paths.get(jsonTargetMonth + ".json")));
+            Type type = new TypeToken<Map<String, Object>>(){}.getType();
+            Map<String, Object> jsonMap = gson.fromJson(jsonContent, type);
+
+            if (jsonMap.containsKey("holidays")) {
+                Map<String, String> holidaysMap = (Map<String, String>) jsonMap.get("holidays");
+                for (Map.Entry<String, String> entry : holidaysMap.entrySet()) {
+                    holidays.put(Integer.parseInt(entry.getKey()), entry.getValue());
+                }
+            }
+
+            //delete all data in json file
+            new FileWriter(jsonTargetMonth + ".json", false).close();
+            // print loaded data.
+            printHolidays();
+            
+        } catch (NoSuchFileException nsfe){
+            System.out.println("Identified as a new Month data.");
+        } 
+        catch (IOException e) {
+            e.printStackTrace();
+        }
         int start_day = 1;
         day_of_First_day = calculateDay(start_day, month, year_last_two, year_first_two);
-        String year = Integer.toString(year_first_two) + Integer.toString(year_last_two);
-        jsonFileName = year + "_holidays";
-        jsonTargetMonth = year + "-" + getStrMonth(month);
-    }
+        }
 
     /**
      * This method will set/reset the year and the month which user's trying to work
@@ -199,11 +277,11 @@ public class setHoliday
 
             try {
                 System.out.println("Type a month you would like to work on. (format: yyyy-mm)");
-                year_month = scanner.nextLine();
+                String year_month_temp = scanner.nextLine();
                 // input check
-                int m = Integer.parseInt(year_month.substring(5));
-                year_first_two = Integer.parseInt(year_month.substring(0, 2));
-                year_last_two = Integer.parseInt(year_month.substring(2, 4));
+                int m = Integer.parseInt(year_month_temp.substring(5));
+                Integer year_first_two_temp = Integer.parseInt(year_month_temp.substring(0, 2));
+                Integer year_last_two_temp = Integer.parseInt(year_month_temp.substring(2, 4));
                 
                 //if user has been working on other month, ask if they want to save the data
                 if (holidays.isEmpty()) {
@@ -214,10 +292,10 @@ public class setHoliday
                         System.out.println("Do you want to delete the previous works?");
                         printHolidays();
                         System.out.println("Reply with Y/N:");
-                        String response = scanner.nextLine();
-                        if (response.toLowerCase() == "y" || response.toLowerCase() == "yes") {
-                            //ignore the previous works and continue this method
-                            //delete the previous works
+                        String response = scanner.nextLine().toLowerCase();
+                        if (response.equals("y") || response.equals("yes")) {
+                            // ignore the previous works and continue this method
+                            // delete the previous works
                             year_month = "";
                             day_of_First_day = null;
                             firstday = 1;
@@ -226,27 +304,30 @@ public class setHoliday
                             year_last_two = 00;
                             jsonFileName = null;
                             jsonTargetMonth = null;
-                            holidays.clear();;
+                            holidays.clear();
+                            ;
                             break;
-                        } else if (response.toLowerCase() == "n" || response.toLowerCase() == "no") {
+                        } else if (response.equals("n") || response.equals("no")) {
                             doNotUpdateMonth = true;
                             System.out.println("Do you want to save your work? Y/N");
-                            response = scanner.nextLine();
-                            if (response.toLowerCase() == "y" || response.toLowerCase() == "yes") {
+                            response = scanner.nextLine().toLowerCase();
+                            if (response.equals("y") || response.equals("yes")) {
                                 break;
-                            } else if (response.toLowerCase() == "n" || response.toLowerCase() == "no") {
-                                
+                            } else if (response.equals("n") || response.equals("no")) {
+
                                 break;
                             }
                         } else {
                             continue;
-                        }   
+                        }
+
                     }
+                    
                     if (doNotUpdateMonth) {
                         while (true) {
                             
-                            System.out.println("Do you want to 1)save current work and continue or 2)continue working on the previous("
-                                    + month + "th) month? ");
+                            System.out.println("Do you want to 1)save current work and continue or 2)continue working on the previous month("
+                                    + getStrMonth(month) + ")?");
                             String integer = scanner.nextLine();
                             int res = Integer.getInteger(integer);
                             if (res == 1) {
@@ -276,12 +357,12 @@ public class setHoliday
                     boolean wrongInput = false;
                     while (true) {
                         System.out.println(
-                                "Please confirms the year and month:" + year_first_two + year_last_two + "-" + m);
+                                "Please confirms the year and month:" + year_first_two_temp + year_last_two_temp + "-" + m);
                         System.out.println("answer with Y/N");
-                        String response = scanner.nextLine();
-                        if (response.toLowerCase() == "y" || response.toLowerCase() == "yes") {
+                        String response = scanner.nextLine().toLowerCase();
+                        if (response.equals("y")  || response.equals("yes")) {
                             break;
-                        } else if (response.toLowerCase() == "n" || response.toLowerCase() == "no") {
+                        } else if (response.equals("n") || response.equals("no")) {
                             wrongInput = true;
                             break;
                         } else {
@@ -291,7 +372,13 @@ public class setHoliday
                     if (wrongInput) {
                         continue; // repeat the outer while loop
                     }
+
+                    //update the mem vars
                     month = m;
+                    year_first_two = year_first_two_temp;
+                    year_last_two = year_last_two_temp;
+                    year_month = year_month_temp;
+
                     System.out.println("New year and month is set.");
                     break;
                 }
@@ -302,6 +389,7 @@ public class setHoliday
         setupACalendar();
         
     }
+    
     private String calculateDay(int k, int m, int d, int c )
     {
         if (m < 3) {
@@ -347,9 +435,10 @@ public class setHoliday
         }
         return dayStr;
     }
+    
     private String getStrMonth(int m)
     {
-        String s =Month.of(m).getDisplayName(TextStyle.FULL, Locale.ENGLISH);
-        return s.toLowerCase();
+        String s =Month.of(m).getDisplayName(TextStyle.FULL, Locale.ENGLISH).toLowerCase();
+        return s;
     }
 }

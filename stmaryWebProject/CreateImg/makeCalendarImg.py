@@ -54,7 +54,7 @@ def create_calendar(year, month, holidays):
         x = 10
 
         
-    img.save(f'calendar.png')
+    img.save('calendars/calendar.png')
 
 
 for month_name, month_data in data.items():
