@@ -6,17 +6,10 @@
     "configurations": [
         {
             "type": "java",
-            "name": "Current File",
-            "request": "launch",
-            "mainClass": "${file}"
-        },
-        {
-            "type": "java",
-            "name": "setHoliday",
+            "name": "setHoliday2",
             "request": "launch",
             "mainClass": "setHoliday",
-            "projectName": "stmaryENT_cf018e0e",
-            "vmArgs": "-Dfile.encoding=UTF-8"
+            "projectName": "stmaryWebProject"
         }
     ]
 }

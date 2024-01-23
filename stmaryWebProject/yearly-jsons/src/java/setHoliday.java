@@ -1,3 +1,5 @@
+package stmaryENT.stmaryWebProject.SetHoliday;
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -5,6 +7,7 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 //import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.nio.charset.StandardCharsets;
@@ -34,15 +37,23 @@ public class setHoliday
     String jsonFileName; 
     String jsonTargetMonth;
     HashMap<Integer, String> holidays = new HashMap<Integer, String>();
-
+    BufferedReader br;
     Scanner scanner = new Scanner(System.in, StandardCharsets.UTF_8.name());
 
     public static void main(String[] args)
     {
-
+        
         setHoliday setHoliday = new setHoliday();
+        //파일 인코딩 확인과정
         System.out.println("Current file encoding: " + System.getProperty("file.encoding"));
         System.out.println("한글 테스트중.");
+        //자바 인코딩 확인 과정:
+            // 기본 문자 인코딩 조회
+        String defaultCharacterEncoding = System.getProperty("file.encoding");
+        System.out.println("자바 기본 문자 인코딩: " + defaultCharacterEncoding);
+            // 사용 가능한 문자셋 출력 (선택적)
+        //java.nio.charset.Charset.availableCharsets().keySet().forEach(System.out::println);
+
         System.out.println("If the line above is broken, try again with typing \"chcp 65001 \" before running this program.");
         setHoliday.printList();
         return;
@@ -57,7 +68,11 @@ public class setHoliday
 
     private void printList()
     {
-        
+        try {
+            br = new BufferedReader(new InputStreamReader(System.in, "UTF-8"));
+        } catch (Exception e) {
+            System.err.println("error in buffer reader at printlist()");
+        }
         int action;
         setYear_Date();
         System.out.println("first day of the month is " + day_of_First_day);
@@ -118,11 +133,14 @@ public class setHoliday
         int newHoliday = 0;
         try {
             System.out.println("type date:");
-        newHoliday = scanner.nextInt();
-        scanner.nextLine();
-        System.out.println("type title.(enter for null)");
-        String title = scanner.nextLine();
-        holidays.put(newHoliday, title);
+            String dateStr = br.readLine();
+            int date = Integer.parseInt(dateStr);
+            //newHoliday = scanner.nextInt();
+            //scanner.nextLine();
+            System.out.println("type title.(enter for null)");
+            //String title = scanner.nextLine();
+            String title = br.readLine();
+            holidays.put(date, title);
         } finally
         {
             System.out.println("your input: " + newHoliday + ": " + holidays.get(newHoliday));
