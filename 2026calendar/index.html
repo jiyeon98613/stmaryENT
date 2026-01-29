@@ -42,6 +42,7 @@
       padding: 6px;
       display: flex;
       flex-direction: column;
+      --day-gap: 4px;
     }
 
     .day.empty {
@@ -55,22 +56,22 @@
     .date {
       font-weight: 600;
       font-size: 13px;
+      margin-bottom: var(--day-gap);
     }
     
     .holiday-label {
       font-size: 10px;
       padding: 2px 6px;
       border-radius: 4px;
-      background: #f3b6c6;   /* 분홍보다 살짝 진한 톤 */
+      background: #f3b6c6;
       color: #7a1f33;
       text-align: center;
-      margin-top: 4px;
       line-height: 1.2;
+      margin-bottom: var(--day-gap);
     }
-
-
+    
     .room-slot {
-      height: 20px;              /* 고정 높이 */
+      height: 20px;
       display: flex;
       align-items: center;
       justify-content: center;
