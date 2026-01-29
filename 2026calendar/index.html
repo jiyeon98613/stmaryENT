@@ -15,20 +15,22 @@
     }
 
     .calendar {
-      width: 420px;
-      position: relative;
-      left: 50%;
-      transform: translateX(-50%);
-    }
+  width: 100%;
+}
 
 
-    /* ✅ 7컬럼 + padding으로 좌우 대칭 해결 */
+
     .calendar-grid {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      gap: 6px;
-      padding: 12px;
-    }
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;     
+  padding: 12px;
+}
+
 
     /* 요일 */
     .weekday {
