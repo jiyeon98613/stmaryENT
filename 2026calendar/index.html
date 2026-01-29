@@ -59,17 +59,19 @@
       margin-bottom: var(--day-gap);
     }
     
-    .holiday-label {
-      font-size: 10px;
-      padding: 2px 6px;
-      border-radius: 4px;
+    .holiday-label label {
       background: #f3b6c6;
       color: #7a1f33;
-      text-align: center;
-      line-height: 1.2;
-      margin-bottom: var(--day-gap);
     }
-    
+
+    .label {
+      display: inline-block;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 11px;
+      text-align: center;
+      min-width: 48px;  
+    }
     .room-slot {
       height: 20px;
       display: flex;
@@ -78,15 +80,12 @@
     }
 
     .room {
-      font-size: 11px;
-      padding: 2px 6px;
-      border-radius: 4px;
-    }
-
-    .room.open {
       background: #e6f4ea;
       color: #137333;
     }
+
+
+
 
     @media (max-width: 360px) {
       .date { font-size: 12px; }
@@ -115,45 +114,45 @@
       </div>
 
       <!-- 2~6 -->
-      <div class="day"><div class="date">2</div><div class="room-slot"><div class="room open">1진료실</div></div><div class="room-slot"></div></div>
-      <div class="day"><div class="date">3</div><div class="room-slot"><div class="room open">1진료실</div></div><div class="room-slot"></div></div>
-      <div class="day"><div class="date">4</div><div class="room-slot"><div class="room open">1진료실</div></div><div class="room-slot"></div></div>
-      <div class="day"><div class="date">5</div><div class="room-slot"><div class="room open">1진료실</div></div><div class="room-slot"></div></div>
-      <div class="day"><div class="date">6</div><div class="room-slot"><div class="room open">1진료실</div></div><div class="room-slot"><div class="room open">2진료실</div></div></div>
+      <div class="day"><div class="date">2</div><div class="room-slot"><div class="room label">1진료실</div></div><div class="room-slot"></div></div>
+      <div class="day"><div class="date">3</div><div class="room-slot"><div class="room label">1진료실</div></div><div class="room-slot"></div></div>
+      <div class="day"><div class="date">4</div><div class="room-slot"><div class="room label">1진료실</div></div><div class="room-slot"></div></div>
+      <div class="day"><div class="date">5</div><div class="room-slot"><div class="room label">1진료실</div></div><div class="room-slot"></div></div>
+      <div class="day"><div class="date">6</div><div class="room-slot"><div class="room label">1진료실</div></div><div class="room-slot"><div class="room label">2진료실</div></div></div>
 
       <!-- 7 -->
-      <div class="day"><div class="date">7</div><div class="room-slot"><div class="room open">1진료실</div></div><div class="room-slot"><div class="room open">2진료실</div></div></div>
+      <div class="day"><div class="date">7</div><div class="room-slot"><div class="room label">1진료실</div></div><div class="room-slot"><div class="room label">2진료실</div></div></div>
 
       <!-- 8 -->
       <div class="day closed-day"><div class="date">8</div><div class="room-slot"></div><div class="room-slot"></div></div>
 
       <!-- 9~14 -->
-      <div class="day"><div class="date">9</div><div class="room-slot"><div class="room open">1진료실</div></div><div class="room-slot"></div></div>
-      <div class="day"><div class="date">10</div><div class="room-slot"><div class="room open">1진료실</div></div><div class="room-slot"></div></div>
-      <div class="day"><div class="date">11</div><div class="room-slot"><div class="room open">1진료실</div></div><div class="room-slot"></div></div>
-      <div class="day"><div class="date">12</div><div class="room-slot"><div class="room open">1진료실</div></div><div class="room-slot"></div></div>
-      <div class="day"><div class="date">13</div><div class="room-slot"><div class="room open">1진료실</div></div><div class="room-slot"><div class="room open">2진료실</div></div></div>
-      <div class="day"><div class="date">14</div><div class="room-slot"><div class="room open">1진료실</div></div><div class="room-slot"><div class="room open">2진료실</div></div></div>
+      <div class="day"><div class="date">9</div><div class="room-slot"><div class="room label">1진료실</div></div><div class="room-slot"></div></div>
+      <div class="day"><div class="date">10</div><div class="room-slot"><div class="room label">1진료실</div></div><div class="room-slot"></div></div>
+      <div class="day"><div class="date">11</div><div class="room-slot"><div class="room label">1진료실</div></div><div class="room-slot"></div></div>
+      <div class="day"><div class="date">12</div><div class="room-slot"><div class="room label">1진료실</div></div><div class="room-slot"></div></div>
+      <div class="day"><div class="date">13</div><div class="room-slot"><div class="room label">1진료실</div></div><div class="room-slot"><div class="room label">2진료실</div></div></div>
+      <div class="day"><div class="date">14</div><div class="room-slot"><div class="room label">1진료실</div></div><div class="room-slot"><div class="room label">2진료실</div></div></div>
 
       <!-- 15 -->
       <div class="day closed-day"><div class="date">15</div><div class="room-slot"></div><div class="room-slot"></div></div>
 
       <!-- 16~18 추석 휴무 -->
-      <div class="day closed-day"><div class="date">16</div><div class="holiday-label">설연휴</div><div class="room-slot"></div><div class="room-slot"></div></div>
-      <div class="day closed-day"><div class="date">17</div><div class="holiday-label">설연휴</div><div class="room-slot"></div><div class="room-slot"></div></div>
-      <div class="day closed-day"><div class="date">18</div><div class="holiday-label">설연휴</div><div class="room-slot"></div><div class="room-slot"></div></div>
+      <div class="day closed-day"><div class="date">16</div><div class="holiday-label label">설연휴</div><div class="room-slot"></div><div class="room-slot"></div></div>
+      <div class="day closed-day"><div class="date">17</div><div class="holiday-label label">설연휴</div><div class="room-slot"></div><div class="room-slot"></div></div>
+      <div class="day closed-day"><div class="date">18</div><div class="holiday-label label">설연휴</div><div class="room-slot"></div><div class="room-slot"></div></div>
 
       <!-- 19~28 -->
-      <div class="day"><div class="date">19</div><div class="room-slot"><div class="room open">1진료실</div></div><div class="room-slot"></div></div>
-      <div class="day"><div class="date">20</div><div class="room-slot"><div class="room open">1진료실</div></div><div class="room-slot"><div class="room open">2진료실</div></div></div>
-      <div class="day"><div class="date">21</div><div class="room-slot"><div class="room open">1진료실</div></div><div class="room-slot"><div class="room open">2진료실</div></div></div>
+      <div class="day"><div class="date">19</div><div class="room-slot"><div class="room label">1진료실</div></div><div class="room-slot"></div></div>
+      <div class="day"><div class="date">20</div><div class="room-slot"><div class="room label">1진료실</div></div><div class="room-slot"><div class="room label">2진료실</div></div></div>
+      <div class="day"><div class="date">21</div><div class="room-slot"><div class="room label">1진료실</div></div><div class="room-slot"><div class="room label">2진료실</div></div></div>
       <div class="day closed-day"><div class="date">22</div><div class="room-slot"></div><div class="room-slot"></div></div>
-      <div class="day"><div class="date">23</div><div class="room-slot"><div class="room open">1진료실</div></div><div class="room-slot"></div></div>
-      <div class="day"><div class="date">24</div><div class="room-slot"><div class="room open">1진료실</div></div><div class="room-slot"></div></div>
-      <div class="day"><div class="date">25</div><div class="room-slot"><div class="room open">1진료실</div></div><div class="room-slot"></div></div>
-      <div class="day"><div class="date">26</div><div class="room-slot"><div class="room open">1진료실</div></div><div class="room-slot"></div></div>
-      <div class="day"><div class="date">27</div><div class="room-slot"><div class="room open">1진료실</div></div><div class="room-slot"><div class="room open">2진료실</div></div></div>
-      <div class="day"><div class="date">28</div><div class="room-slot"><div class="room open">1진료실</div></div><div class="room-slot"><div class="room open">2진료실</div></div></div>
+      <div class="day"><div class="date">23</div><div class="room-slot"><div class="room label">1진료실</div></div><div class="room-slot"></div></div>
+      <div class="day"><div class="date">24</div><div class="room-slot"><div class="room label">1진료실</div></div><div class="room-slot"></div></div>
+      <div class="day"><div class="date">25</div><div class="room-slot"><div class="room label">1진료실</div></div><div class="room-slot"></div></div>
+      <div class="day"><div class="date">26</div><div class="room-slot"><div class="room label">1진료실</div></div><div class="room-slot"></div></div>
+      <div class="day"><div class="date">27</div><div class="room-slot"><div class="room label">1진료실</div></div><div class="room-slot"><div class="room label">2진료실</div></div></div>
+      <div class="day"><div class="date">28</div><div class="room-slot"><div class="room label">1진료실</div></div><div class="room-slot"><div class="room label">2진료실</div></div></div>
 
     </div>
   </div>
