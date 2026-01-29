@@ -1,18 +1,68 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <title>Calendar</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>2026 Calendar</title>
+
   <style>
-    body { margin:0; font-family: system-ui; }
-    .calendar { max-width: 360px; margin: auto; }
+    /* 전체 리셋 */
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont;
+    }
+
+    /* 달력 컨테이너 */
+    .calendar-wrapper {
+      width: 100%;
+      max-width: 420px;   /* PC에서 너무 커지지 않게 */
+      margin: 0 auto;
+      padding: 12px;
+    }
+
+    /* 예시: 반응형 그리드 */
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 6px;
+    }
+
+    .day {
+      aspect-ratio: 1 / 1;   /* 핵심: 정사각형 유지 */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f4f4f4;
+      border-radius: 6px;
+      font-size: clamp(12px, 2.5vw, 14px);
+    }
+
+    /* 모바일 대응 */
+    @media (max-width: 360px) {
+      .calendar-wrapper {
+        padding: 8px;
+      }
+    }
   </style>
 </head>
-<body>
-  <div class="calendar" id="calendar"></div>
 
-  <script>
-    // 달력 JS 로직
-  </script>
+<body>
+  <div class="calendar-wrapper">
+    <div class="calendar-grid">
+      <!-- 날짜 div들 -->
+      <div class="day">1</div>
+      <div class="day">2</div>
+      <!-- ... -->
+    </div>
+  </div>
 </body>
 </html>
