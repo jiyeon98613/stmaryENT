@@ -16,20 +16,18 @@
 
     .calendar {
   width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
-
-
-    .calendar-grid {
+.calendar-grid {
+  width: 420px;
+  padding: 12px;
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   gap: 6px;
-
-  width: 100%;
-  max-width: 420px;
-  margin: 0 auto;     
-  padding: 12px;
 }
+
 
 
     /* 요일 */
@@ -94,6 +92,7 @@
       color: #7a1f33;
       margin-bottom: var(--day-gap);
     }
+
 
     @media (max-width: 360px) {
       .date { font-size: 12px; }
