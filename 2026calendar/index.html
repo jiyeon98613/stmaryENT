@@ -14,12 +14,10 @@ body {
   background: #F5E8CE;
 }
 
-/* 전체 */
 .calendar {
   width: 100vw;
 }
 
-/* 가로 7등분 */
 .calendar-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
@@ -36,25 +34,20 @@ body {
   align-items: center;
 }
 
-/* 요일 (1줄) */
+/* 요일 */
 .weekday {
   height: 1.8em;
-  background: transparent;
+  background: #f5f5f5;
   font-size: 12px;
   font-weight: 600;
   justify-content: center;
 }
 
-/* 날짜 박스 (2줄 고정) */
+/* 날짜 박스 (2줄 기준) */
 .day {
   background: #f5f5f5;
-  min-height: calc(1.6em + 1.8em + 8px); /* 날짜 + 라벨 */
+  min-height: calc(1.6em + 1.8em + 8px);
   justify-content: flex-start;
-}
-
-/* 빈 칸 */
-.empty {
-  background: transparent;
 }
 
 /* 휴무일 */
@@ -92,7 +85,6 @@ body {
   color: #7a1f33;
 }
 
-/* 모바일 */
 @media (max-width: 360px) {
   .date { font-size: 12px; }
   .label { font-size: 10px; }
@@ -113,15 +105,25 @@ body {
 <div class="cell weekday">토</div>
 <div class="cell weekday">일</div>
 
-<!-- 2월 시작 전 -->
-<div class="cell empty"></div>
-<div class="cell empty"></div>
-<div class="cell empty"></div>
-<div class="cell empty"></div>
-<div class="cell empty"></div>
-<div class="cell empty"></div>
+<!-- 1월 26~31 -->
+<div class="cell day"><div class="date">26</div><div class="label room">1진료실</div></div>
+<div class="cell day"><div class="date">27</div><div class="label room">1진료실</div></div>
+<div class="cell day"><div class="date">28</div><div class="label room">1진료실</div></div>
+<div class="cell day"><div class="date">29</div><div class="label room">1진료실</div></div>
 
-<!-- 1 -->
+<div class="cell day">
+  <div class="date">30</div>
+  <div class="label room">1진료실</div>
+  <div class="label room">2진료실</div>
+</div>
+
+<div class="cell day">
+  <div class="date">31</div>
+  <div class="label room">1진료실</div>
+  <div class="label room">2진료실</div>
+</div>
+
+<!-- 2월 1 (일요일 휴무) -->
 <div class="cell day closed"><div class="date">1</div></div>
 
 <!-- 2~7 -->
@@ -133,13 +135,11 @@ body {
 <div class="cell day">
   <div class="date">6</div>
   <div class="label room">1진료실</div>
-  
 </div>
 
 <div class="cell day">
   <div class="date">7</div>
   <div class="label room">1진료실</div>
-  
 </div>
 
 <!-- 8 -->
@@ -171,7 +171,7 @@ body {
 <div class="cell day closed"><div class="date">17</div><div class="label holiday">설연휴</div></div>
 <div class="cell day closed"><div class="date">18</div><div class="label holiday">설연휴</div></div>
 
-<!-- 19~28 -->
+<!-- 19~21 -->
 <div class="cell day"><div class="date">19</div><div class="label room">1진료실</div></div>
 
 <div class="cell day">
@@ -186,8 +186,10 @@ body {
   <div class="label room">2진료실</div>
 </div>
 
+<!-- 22 -->
 <div class="cell day closed"><div class="date">22</div></div>
 
+<!-- 23~28 -->
 <div class="cell day"><div class="date">23</div><div class="label room">1진료실</div></div>
 <div class="cell day"><div class="date">24</div><div class="label room">1진료실</div></div>
 <div class="cell day"><div class="date">25</div><div class="label room">1진료실</div></div>
@@ -205,9 +207,11 @@ body {
   <div class="label room">2진료실</div>
 </div>
 
+<!-- 3월 1 (일요일 휴무) -->
+<div class="cell day closed"><div class="date">1</div></div>
+
 </div>
 </div>
 </body>
 </html>
-
 
