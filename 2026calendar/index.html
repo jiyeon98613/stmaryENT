@@ -17,17 +17,17 @@
     .calendar {
       max-width: 420px;
       margin: 0 auto;
-      padding: 0;
     }
 
-    /* ✅ 좌우 더미 컬럼 포함 */
+    /* ✅ 7컬럼 + padding으로 좌우 대칭 해결 */
     .calendar-grid {
       display: grid;
-      grid-template-columns: 8px repeat(7, 1fr) 8px;
+      grid-template-columns: repeat(7, 1fr);
       gap: 6px;
       padding: 12px;
     }
 
+    /* 요일 */
     .weekday {
       text-align: center;
       font-size: 12px;
@@ -35,6 +35,7 @@
       padding: 4px 0;
     }
 
+    /* 날짜 카드 */
     .day {
       aspect-ratio: 1 / 1;
       background: #f5f5f5;
@@ -59,6 +60,7 @@
       margin-bottom: var(--day-gap);
     }
 
+    /* 공통 라벨 */
     .label {
       display: inline-block;
       padding: 2px 6px;
@@ -75,15 +77,17 @@
       justify-content: center;
     }
 
+    /* 진료실 */
     .room {
       background: #e6f4ea;
       color: #137333;
     }
 
-    /* ✅ 오타 수정: holiday-label 스타일 복구 */
+    /* 휴무 사유 */
     .holiday-label {
       background: #f3b6c6;
       color: #7a1f33;
+      margin-bottom: var(--day-gap);
     }
 
     @media (max-width: 360px) {
@@ -97,49 +101,71 @@
   <div class="calendar">
     <div class="calendar-grid">
 
-      <!-- 요일 (좌우 더미 포함) -->
-      <div></div>
-      <div class="weekday">월</div><div class="weekday">화</div><div class="weekday">수</div>
-      <div class="weekday">목</div><div class="weekday">금</div><div class="weekday">토</div><div class="weekday">일</div>
-      <div></div>
+      <!-- 요일 -->
+      <div class="weekday">월</div>
+      <div class="weekday">화</div>
+      <div class="weekday">수</div>
+      <div class="weekday">목</div>
+      <div class="weekday">금</div>
+      <div class="weekday">토</div>
+      <div class="weekday">일</div>
 
-      <!-- 첫 주 더미 -->
-      <div></div>
-      <div class="day empty"></div><div class="day empty"></div><div class="day empty"></div>
-      <div class="day empty"></div><div class="day empty"></div><div class="day empty"></div>
+      <!-- 2월 1일은 일요일 -->
+      <div class="day empty"></div>
+      <div class="day empty"></div>
+      <div class="day empty"></div>
+      <div class="day empty"></div>
+      <div class="day empty"></div>
+      <div class="day empty"></div>
+
       <div class="day closed-day">
         <div class="date">1</div>
         <div class="room-slot"></div>
         <div class="room-slot"></div>
       </div>
-      <div></div>
 
       <!-- 2~7 -->
-      <div></div>
       <div class="day"><div class="date">2</div><div class="room-slot"><div class="room label">1진료실</div></div><div class="room-slot"></div></div>
       <div class="day"><div class="date">3</div><div class="room-slot"><div class="room label">1진료실</div></div><div class="room-slot"></div></div>
       <div class="day"><div class="date">4</div><div class="room-slot"><div class="room label">1진료실</div></div><div class="room-slot"></div></div>
       <div class="day"><div class="date">5</div><div class="room-slot"><div class="room label">1진료실</div></div><div class="room-slot"></div></div>
       <div class="day"><div class="date">6</div><div class="room-slot"><div class="room label">1진료실</div></div><div class="room-slot"><div class="room label">2진료실</div></div></div>
       <div class="day"><div class="date">7</div><div class="room-slot"><div class="room label">1진료실</div></div><div class="room-slot"><div class="room label">2진료실</div></div></div>
-      <div></div>
 
-      <!-- 이후 날짜도 동일 규칙 (앞뒤 <div></div>) -->
-      <!-- 16~18 예시 -->
-      <div></div>
+      <!-- 8 -->
+      <div class="day closed-day"><div class="date">8</div><div class="room-slot"></div><div class="room-slot"></div></div>
+
+      <!-- 9~14 -->
+      <div class="day"><div class="date">9</div><div class="room-slot"><div class="room label">1진료실</div></div><div class="room-slot"></div></div>
+      <div class="day"><div class="date">10</div><div class="room-slot"><div class="room label">1진료실</div></div><div class="room-slot"></div></div>
+      <div class="day"><div class="date">11</div><div class="room-slot"><div class="room label">1진료실</div></div><div class="room-slot"></div></div>
+      <div class="day"><div class="date">12</div><div class="room-slot"><div class="room label">1진료실</div></div><div class="room-slot"></div></div>
+      <div class="day"><div class="date">13</div><div class="room-slot"><div class="room label">1진료실</div></div><div class="room-slot"><div class="room label">2진료실</div></div></div>
+      <div class="day"><div class="date">14</div><div class="room-slot"><div class="room label">1진료실</div></div><div class="room-slot"><div class="room label">2진료실</div></div></div>
+
+      <!-- 15 -->
+      <div class="day closed-day"><div class="date">15</div><div class="room-slot"></div><div class="room-slot"></div></div>
+
+      <!-- 16~18 설연휴 -->
       <div class="day closed-day"><div class="date">16</div><div class="holiday-label label">설연휴</div><div class="room-slot"></div><div class="room-slot"></div></div>
       <div class="day closed-day"><div class="date">17</div><div class="holiday-label label">설연휴</div><div class="room-slot"></div><div class="room-slot"></div></div>
       <div class="day closed-day"><div class="date">18</div><div class="holiday-label label">설연휴</div><div class="room-slot"></div><div class="room-slot"></div></div>
+
+      <!-- 19~28 -->
       <div class="day"><div class="date">19</div><div class="room-slot"><div class="room label">1진료실</div></div><div class="room-slot"></div></div>
       <div class="day"><div class="date">20</div><div class="room-slot"><div class="room label">1진료실</div></div><div class="room-slot"><div class="room label">2진료실</div></div></div>
       <div class="day"><div class="date">21</div><div class="room-slot"><div class="room label">1진료실</div></div><div class="room-slot"><div class="room label">2진료실</div></div></div>
-      <div></div>
+      <div class="day closed-day"><div class="date">22</div><div class="room-slot"></div><div class="room-slot"></div></div>
+      <div class="day"><div class="date">23</div><div class="room-slot"><div class="room label">1진료실</div></div><div class="room-slot"></div></div>
+      <div class="day"><div class="date">24</div><div class="room-slot"><div class="room label">1진료실</div></div><div class="room-slot"></div></div>
+      <div class="day"><div class="date">25</div><div class="room-slot"><div class="room label">1진료실</div></div><div class="room-slot"></div></div>
+      <div class="day"><div class="date">26</div><div class="room-slot"><div class="room label">1진료실</div></div><div class="room-slot"></div></div>
+      <div class="day"><div class="date">27</div><div class="room-slot"><div class="room label">1진료실</div></div><div class="room-slot"><div class="room label">2진료실</div></div></div>
+      <div class="day"><div class="date">28</div><div class="room-slot"><div class="room label">1진료실</div></div><div class="room-slot"><div class="room label">2진료실</div></div></div>
 
-      <!-- 필요하면 나머지 날짜도 같은 패턴으로 -->
     </div>
   </div>
 </body>
 </html>
-
 
 
