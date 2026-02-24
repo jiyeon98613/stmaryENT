@@ -99,6 +99,37 @@ body {
 }
 .room    { background: #cce8ff; color: #1541B6; }
 .holiday { background: #f3b6c6; color: #7a1f33; }
+
+/* 범례 */
+.legend {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-size: var(--label-font);
+  color: #4a3728;
+}
+.legend-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.legend-sep {
+  color: #a08060;
+  font-weight: 300;
+}
+/* 범례 배지: 달력 라벨과 동일 스타일, 인라인 */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0 0.6em;
+  line-height: 1.8em;
+  border-radius: 99px;
+  font-size: inherit;
+  font-weight: 600;
+  white-space: nowrap;
+}
 </style>
 </head>
 
@@ -302,6 +333,19 @@ body {
 </div>
 
 </div>
+
+<!-- 범례 -->
+<div class="legend">
+  <div class="legend-row">
+    <span class="badge room">1진료실</span>: 김규백 원장님
+    <span class="legend-sep">|</span>
+    <span class="badge room">2진료실</span>: 오충현 부원장님
+  </div>
+  <div class="legend-row">
+    3월 휴무일: 3/2 <span class="badge holiday">3.1절 대체</span>
+  </div>
+</div>
+
 </div>
 </body>
 </html>
